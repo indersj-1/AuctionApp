@@ -4,86 +4,91 @@ var mongodb = require('./mongo_client'),
 
 var oodb = function (){  
    var self = this;
+   self.userDetails = userDetails;
+   self.inventoryDetails = inventoryDetails;
 
 
-   self.get = function (query,callback){
-   		id = new ObjectId()
-   		if(query.filter.id){
-   			query.filter._id = new ObjectId(query.filter.id)
-   			delete query.filter.id;
-   		}
-   		console.log(query);
-   		console.log(query.filter)
-   		 				    mongodb.db()
-                            .collection(query.tableName)
-                            .find(query.filter)
-                            .toArray(function(err, response) {
-                            if (err) {
-                            		 callback({status:500,msg:"some error occured"}) 
-                            		}
-                            		   callback({status:200, data:response})
-                            		   mongodb.close();
+
+function inventoryDetails(query,callback){
+          mongodb.db().collection("inventory").find().toArray(function(err, response) {
+                if (!err  && response.length) {
+                    callback({status:200, data:response})
+                  }else{
+                    console.log("checkInventory")
+                    callback({status:500, msg:"no records available"}) 
+                  }
+                });
+}
+
+
+function userDetails(query, callback){
+          console.log(query)
+     id = new ObjectId()
+      if(query.filter.id){
+        query.filter._id = new ObjectId(query.filter.id)
+        delete query.filter.id;
+      }
+      var sharedData = {};
+            async.waterfall([checkUser, saveUser,checkInventory, saveInventory], function(response){
+        callback(response)  
+      })
+          function checkUser(callback){
+            console.log("checkUser user!!!!!!!!")
+            console.log(query.filter)
+            mongodb.db().collection(query.tableName).find(query.filter).toArray(function(err, response) {
+                            if (!err  && response.length) {
+                              console.log("data exixts....."+JSON.stringify(response))
+                                callback({status:200, data:response})
+                              }else{
+                              console.log("funcking hell....")
+                                callback()    
+                              }
+                             
                             });
+          }
 
-   };
+          function saveUser(callback){
+            query.value.balance = 1000;
+             mongodb.db().collection(query.tableName).insert(query.value, function(err, response){
+                if(err){
+                  console.log(err)
+                    callback({status:500, msg:"some erro occured"});
+                }else{
+                  sharedData.users = response.ops;
+                    callback()
+                     
+                  }
+      });
+          }
 
-   self.save = function(query,callback){
-   		console.log(query)
-   		if(query.value.email){
-   			query.value._id = query.value.email;
-   			delete query.value.email;
-   		}
-   		
+
+          function checkInventory(callback){
+
+          mongodb.db().collection("inventory").find().toArray(function(err, response) {
+                            if (!err  && response.length) {
+                                callback({status:200, data:sharedData})
+                              }else{
+                              console.log("checkInventory")
+                                callback()   
+                              }
+                            });
+          }
 
 
-			async.waterfall([fetchUser, saveUser], function(response){
-				callback(response)	
-			})
+          function saveInventory(callback){
+            var inventory = {breads:30,carrots:18,diamond:1}
+                    mongodb.db().collection("inventory").insertOne(inventory, function(err, response){
+                if(err){
+                  console.log(err)
+                    callback({status:500, msg:"some erro occured"});
+                }else{
+                    callback({status:200, data:sharedData})
+                     
+                  }
+      });
+          }
 
-
-		function fetchUser(callback){
-			console.log("fetchUser")
-			mongodb.db()
-	        .collection(query.tableName)
-	        .find({_id:query.value._id})
-	        .toArray(function(err, response) {
-	        if (err){
-	        		 callback({status:500,msg:"some error occured"}) 
-	        		}else{
-	        			console.log(response.length)
-	     	        	if(response.length == 0){
-	        				console.log("no user found")
-	        				saveUser(callback)		
-	        			}else{
-	        				console.log('user found')
-	        				callback({status:500,msg:"User Already exists"})			
-	        			}	        		 
-	        		}
-	        		  
-	        		 //  mongodb.close();
-	        });
-
-		}
-
-		function saveUser(callback){
-			console.log("saveUser")
-			 mongodb.db().collection(query.tableName).insertOne(query.value, function(err, response){
-   			  if(err){
-   			  	console.log("saveUser erro occured")
-   			  	console.log(err)
-   			  		callback({status:500, msg:"some erro occured"});
-   			  }else{
-   			  	console.log("saveUser success")
-   			      callback({status:200, data:response})
-        		   
-   			    }
-        		// mongodb.close();	
-   		});
-
-		}
-  
-   }
-
+}
 };
 
 module.exports = oodb;
