@@ -54,7 +54,7 @@ var app = angular.module('myApp', ['ui.router']);
                   $scope.selectedItem = {"item":type,"count":count}              
              }else{
               
-              $("#notifyMes").text("Let Current Auction done!!!!")
+              $("#notifyMes").text("currently another auction in progress!!!!")
               $('.notify').fadeIn().delay(2000).fadeOut();
              }
 
@@ -65,6 +65,9 @@ var app = angular.module('myApp', ['ui.router']);
 
               $("#notifyMes").text("The bid value must always be higher than the current winning bid, or at least equal to the minimum bid")
               $('.notify').fadeIn().delay(2000).fadeOut();   
+              }else{
+                $("#notifyMes").text("biding is been placed successfully!!!!!!")
+              $('.notify').fadeIn().delay(2000).fadeOut(); 
               }
              
              }
