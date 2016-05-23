@@ -1,25 +1,25 @@
-.jumbotron{
-  height: 100%
+.jumbotron {
+    height: 100%;
 }
 
-.panel-table{
-      min-height: 354px !important;
-    height: 16% !important;
-    overflow-y: scroll;
-}
-.panel-title,.table tr{
-  text-align: center;
-  vertical-align: inherit;
-}
-.margin-top{
-  margin-top: 140px
-}
-.caps{
-  text-transform:capitalize;
-}
+.panel-table {
+        min-height: 354px !important;
+        height: 16% !important;
+        overflow-y: scroll;
+    }
+    .panel-title, .table tr {
+        text-align: center;
+        vertical-align: inherit;
+    }
+    .margin-top {
+        margin-top: 140px
+    }
+    .caps {
+        text-transform: capitalize;
+    }
 
-.notify {
-  opacity: 1;
+.notify{
+    opacity: 1;
     top: 0px;
     position: fixed;
     color: #fff;
@@ -27,22 +27,22 @@
     line-height: 18px;
     padding: 10px;
     text-align: center;
-    margin: 0 24.5%;
-    width: 58%;
+    margin: 0 24.5% ;
+    width: 58% ;
     z-index: 99999;
 }
 
-.fsize{
-  font-size: 40px;
-  color:blue;
+.fsize {
+    font-size: 40px;
+    color: blue;
 }
-.tsize{
-  font-size: 24px;
-  color:blue;
+.tsize {
+    font-size: 24px;
+    color: blue;
 }
 
-.setbg{
-  border-radius: 50px !important
+.setbg {
+    border-radius: 50px !important;
 }
 .blink {
   animation: blinker 1s linear infinite;
@@ -50,4 +50,14 @@
 
 @keyframes blinker {  
   50% { opacity: 0.0; }
+}
+.textcolor {
+    color: black;
+}
+.well-sm {
+    margin: 10px;
+}
+
+.borderRadius {
+    border-radius: 20 px!important;
 }

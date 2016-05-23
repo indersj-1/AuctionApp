@@ -10,3 +10,7 @@ git push -u origin master
 
 git remote add origin https://github.com/indersj-1/ChattingApp.git
 git push -u origin master
+
+
+//
+mongod --storageEngine=mmapv1 --dbpath

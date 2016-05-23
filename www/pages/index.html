@@ -2,23 +2,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Auction | by Inder</title>
-<link href="pages/css/bootstrap.min.css" rel="stylesheet">
+<!-- Plugins -->
+<link href="pages/css/plugin/bootstrap.min.css" rel="stylesheet">
+<link href="pages/css/plugin/bootstrap-material-design.css" rel="stylesheet">
+<link href="pages/css/plugin/ripples.min.css" rel="stylesheet">
+<link href="pages/css/plugin/font-awesome.css" rel="stylesheet">
+<script type="text/javascript" src="pages/js/plugin/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="pages/js/plugin/bootstrap.min.js"></script>
+<script type="text/javascript" src="pages/js/plugin/angular.min.js"></script>
+<script type="text/javascript" src="pages/js/plugin/angular-ui-router.js"></script>
+<script type="text/javascript" src="pages/js/plugin/material.js"></script>
+<script type="text/javascript" src="pages/js/plugin/ripples.js"></script>
+<script type="text/javascript" src="pages/js/plugin/socket.io-1.4.5.js"></script>
+
+<!-- Custom -->
 <link href="pages/css/custom.css" rel="stylesheet">
-<link href="pages/css/bootstrap-material-design.css" rel="stylesheet">
-<link href="pages/css/ripples.min.css" rel="stylesheet">
-
-<link href="pages/css/font-awesome.css" rel="stylesheet">
-<script type="text/javascript" src="pages/js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="pages/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="pages/js/angular.min.js"></script>
-<script type="text/javascript" src="pages/js/angular-ui-router.js"></script>
-
-<script type="text/javascript" src="pages/js/material.js"></script>
-<script type="text/javascript" src="pages/js/ripples.js"></script>
-
-<script type="text/javascript" src="pages/js/socket.io-1.4.5.js"></script>
-
-<script type="text/javascript" src="pages/js/custom.js"></script>
+<script type="text/javascript" src="pages/js/router.js"></script>
+<script type="text/javascript" src="pages/js/welcome.js"></script>
+<script type="text/javascript" src="pages/js/login.js"></script>
+<!-- <script type="text/javascript" src="pages/js/register.js"></script>
+ -->
 </head>
 <body ng-app="myApp">
       <div class="notify" style='display: none'><div class="alert alert-dismissible alert-success">
@@ -27,11 +30,11 @@
       <div id="main">
                     <!-- Templating angularjs -->
                     <div ui-view></div>
-
                     </div>
 
 <script>
-var socket = io.connect('http://192.168.42.244:80');
+/*Connecting to socket*/
+var socket = io.connect('http://localhost:80');
 
   socket.on('testConnection', function (data) {
     console.log(data);
